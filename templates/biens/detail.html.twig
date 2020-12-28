@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GE-IM catalogue!
+{% endblock %}
+
+{% block header %}
+	<div class="intro-text vertical-center text-left smoothie">
+		<div class="intro-heading wow fadeIn heading-font" data-wow-delay="0.2s">Detail</div>
+	</div>
+{% endblock %}
+{% block body %}
+	<section>
+		<div class="section-inner">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 mb50">
+								<div class="images">
+									<span class="onsale">{{bien.type}}!</span>
+									<a class="lb-link" data-rel="product-gallery" href="https://source.unsplash.com/860x580/?immeuble" title="Image Title">
+										<img alt="Image Title" class="img-responsive" src="https://source.unsplash.com/860x580/?immeuble" title="Image Title">
+									</a>
+
+									<div class="thumbnails mt">
+										<a class="lb-link" data-rel="product-gallery" href="https://source.unsplash.com/860x580/?immeuble" title="Image Title 2">
+											<img alt="image title" height="100" width="100" src="https://source.unsplash.com/860x580/?immeuble">
+										</a>
+										<a class="lb-link" data-rel="product-gallery" href="https://source.unsplash.com/860x580/?immeuble" title="Image Title 2">
+											<img alt="image title" height="100" width="100" src="https://source.unsplash.com/860x580/?immeuble">
+										</a>
+										<a class="lb-link" data-rel="product-gallery" href="https://source.unsplash.com/860x580/?immeuble" title="Image Title 2">
+											<img alt="image title" height="100" width="100" src="https://source.unsplash.com/860x580/?immeuble">
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xs-12 col-sm-6 mb50">
+								<div class="summary entry-summary">
+
+									<div>
+										<p class="price">
+											<del>
+												<span class="amount">{{bien.prix}} $</span>
+											</del>
+											<ins>
+												<span class="amount">{{bien.prix}} $</span>
+											</ins>
+										</p>
+                                    </div>
+                                    <div class="lead">
+										<p>{{bien.typeUsage}}</p>
+									</div>
+                                    <div class="lead">
+										<p>Situé à {{bien.zone}}</p>
+									</div>
+
+									<div class="lead">
+										<p>{{bien.description}}</p>
+                                    </div>
+                                    
+                                    <a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("biens_add",{id:bien.id})}}">Modifier</a>
+                                    <a class="btn btn-primary mt30" href="{{path("detail",{id:bien.id})}}">Retirer</a>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

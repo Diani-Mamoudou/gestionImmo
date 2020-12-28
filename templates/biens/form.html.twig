@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GE-IM catalogue!
+{% endblock %}
+
+{% block header %}
+	<div class="intro-text vertical-center text-left smoothie">
+		<div class="intro-heading wow fadeIn heading-font" data-wow-delay="0.2s">Detail</div>
+	</div>
+{% endblock %}
+{% block body %}
+<div class="tab-content" id="tabs-collapse">
+                    <div role="tabpanel" class="tab-pane fade in active" id="contact1">
+                        <div id="contact-inner" class="nopadding-lr">
+                            <div class="contact-section-inner">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <div id="message"></div>
+                                            <form method="post" action="sendemail.php" id="contactform" class="main-contact-form wow">
+                                                <input type="text" class="form-control col-md-4" name="name" placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your name." />
+                                                <input type="text" class="form-control col-md-4" name="email" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email address." />
+                                                <input type="text" class="form-control col-md-4" name="website" placeholder="Your URL *" id="website" required data-validation-required-message="Please enter your web address." />
+                                                <textarea name="comments" class="form-control" id="comments" placeholder="Your Message *" required data-validation-required-message="Please enter a message."></textarea>
+                                                <input class="btn btn-primary mt30 btn-white pull-right" type="submit" name="submit" value="Submit" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane fade" id="contact2">
+                        <div id="mapwrapper"></div>
+                    </div>
+
+                </div>
+{% endblock %}

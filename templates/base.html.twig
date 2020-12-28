@@ -1,12 +1,136 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/img/ico/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{asset("vendor/img/ico/apple-touch-icon-144x144.png")}}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{asset("vendor/img/ico/apple-touch-icon-114x114.png")}}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{asset("vendor/img/ico/apple-touch-icon-72x72.png")}}">
+    <link rel="apple-touch-icon" href="{{asset("vendor/img/ico/apple-touch-icon-57x57.png")}}">
+
+    <title>GE-IM</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{asset("vendor/css/bootstrap.min.css")}}" rel="stylesheet">
+    <link href="{{asset("vendor/css/animate.css")}}" rel="stylesheet">
+    <link href="{{asset("vendor/css/plugins.css")}}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{asset("vendor/css/style.css")}}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{{asset("vendor/font-awesome/css/font-awesome.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("vendor/css/pe-icons.css")}}" rel="stylesheet">
+
+</head>
+
+<body id="page-top" class="index">
+
+    <div class="master-wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top fadeInDown" data-wow-delay="0.5s">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h1 style="color:white">GE-IM</h1>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="main-navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" >Acceuil</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" >gestion</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" >reservation</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Catégorie <span class="pe-7s-angle-down"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="footer-1.html">Catégorie 1</a></li>
+                                <li><a href="footer-2.html">Catégorie 2</a></li>
+                                <li><a href="footer-3.html">Catégorie 3</a></li>
+                                <li><a href="footer-4.html">Catégorie 4</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">admin <span class="pe-7s-angle-down"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="footer-1.html">mon profil</a></li>
+                                <li><a href="footer-2.html">se deconnecter</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+
+        <!-- Header -->
+        <header id="headerwrap" class="backstretched special-max-height">
+            <div class="container vertical-center">
+                {% block header %}
+                    <div class="intro-text vertical-center text-left smoothie">
+                        <div class="intro-heading wow fadeIn heading-font" data-wow-delay="0.2s">c'est GE-IM</div>
+                        <div class="intro-sub-heading wow fadeIn secondary-font" data-wow-delay="0.4s">Avec nous <span class="rotate">gérer vos biens, louer des biens, simplifier la gestion de biens</span></div>
+                    </div>
+                {% endblock %}
+                
+            </div>
+        </header>
+
+        <section>
+            {% block body %}
+                
+            {% endblock %}
+        </section>
+
+    </div>
+
+
+    <script src="{{asset("vendor/js/jquery.js")}}"></script>
+    <script src="{{asset("vendor/js/bootstrap.min.js")}}"></script>
+    <script src="{{asset("vendor/js/plugins.js")}}"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="{{asset("vendor/js/init.js")}}"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        'use strict';
+        jQuery('#headerwrap').backstretch([
+            "https://source.unsplash.com/1280x853/?immeuble",
+        ], {
+            duration: 8000,
+            fade: 500
+        });
+    });
+    </script>
+
+</body>
+
 </html>
