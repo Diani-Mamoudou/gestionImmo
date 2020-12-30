@@ -3,24 +3,17 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\BiensRepository;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints\Choice;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Repository\DemandeRepository;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=BiensRepository::class)
+ * @ORM\Entity(repositoryClass=DemandeRepository::class)
  */
-class Biens
+class Demande
 {
     const TYPE = ["immeuble" => "immeuble", "chambre" => "chambre", "studio" => "studio", "appartement" => "appartement"];
     const TYPEU = ["bureau" => "bureau", "logement" => "logement"];
-    const ETAT = ["Libre" => "libre", "louer" => "louer", "Refection" => "Refection"];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -29,15 +22,16 @@ class Biens
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      * @Assert\NotBlank(message="la description est obligatoire")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $prix;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -63,8 +57,6 @@ class Biens
      */
     private $loyer;
 
- 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -77,9 +69,8 @@ class Biens
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Choice({"libre", "louer", "refection"})
      */
-    private $etat = "libre";
+    private $typeDema;
 
     public function getId(): ?int
     {
@@ -98,12 +89,12 @@ class Biens
         return $this;
     }
 
-    public function getPrix(): ?float
+    public function getPrix(): ?int
     {
         return $this->prix;
     }
 
-    public function setPrix(?float $prix): self
+    public function setPrix(?int $prix): self
     {
         $this->prix = $prix;
 
@@ -158,7 +149,6 @@ class Biens
         return $this;
     }
 
-
     public function getPhoto(): ?string
     {
         return $this->photo;
@@ -183,14 +173,14 @@ class Biens
         return $this;
     }
 
-    public function getEtat(): ?string
+    public function getTypeDema(): ?string
     {
-        return $this->etat;
+        return $this->typeDema;
     }
 
-    public function setEtat(string $etat): self
+    public function setTypeDema(string $typeDema): self
     {
-        $this->etat = $etat;
+        $this->typeDema = $typeDema;
 
         return $this;
     }

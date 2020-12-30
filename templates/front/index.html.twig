@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GE-IM catalogue!{% endblock %}
+
+{% block body %}
+    <div class="section-inner">
+                <div class="container">
+                    <div class="row">
+                        {% for bien in biens %}
+                        <div class="col-sm-4 blog-item mb100 wow match-height">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="hover-item mb30">
+                                        <img src="https://source.unsplash.com/860x580/?immeuble" class="img-responsive smoothie" alt="title">
+                                        <div class="overlay-item-caption smoothie"></div>
+                                        <div class="hover-item-caption smoothie">
+                                            <h3 class="vertical-center smoothie"><a href="single-post-right-sidebar.html" class="smoothie btn btn-primary page-scroll" title="view article">View</a></h3>
+                                        </div>
+                                    </div>
+                                    <h2 class="post-title">{{bien.typeUsage}}</h2>
+                                    <p>{{bien.description|slice(0,100)}}</p>
+                                    <a class="btn btn-primary mt30" href="{{path("detail",{id:bien.id})}}">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                      Pas de bien.
+                    {% endfor %}
+                    </div>
+
+                    <div class="row paging text-center">
+                        <a class="btn btn-primary mt30" href="#">Older Posts</a>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
