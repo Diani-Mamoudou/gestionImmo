@@ -84,6 +84,9 @@ class DemandeController extends AbstractController
         
     }
 
+
+    
+
     /**
      * @Route("/demande/accDem/{id?}", name="accepte_demande")
      */
@@ -132,7 +135,7 @@ class DemandeController extends AbstractController
         $manager->remove($demande);
         $manager->flush();
         
-        return $this->redirectToRoute("touteDemande");
+        return $this->redirectToRoute("touteReservation");
 
     }
 

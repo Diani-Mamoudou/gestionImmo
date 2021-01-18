@@ -55,15 +55,38 @@
                             <a href="{{path("front_shows")}}" >Acceuil</a>
                         </li>
 
-                        {% if is_granted("ROLE_GESTIONNAIRE") %}
-                            <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">gestion demande<span class="pe-7s-angle-down"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{path("demande")}}">Nouvelle demande</a></li>
-                                    <li><a href="{{path("touteDemande")}}">Demande</a></li>
-                                    <li><a href="{{path("touteDemande")}}">Reservation</a></li>
-                                </ul>
-                            </li>
+                        {% if app.user !=null %}
+                            {% if app.user.profil.libelle == "Gestionnaire" %}
+                                <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">gestion demande<span class="pe-7s-angle-down"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{path("touteDemande")}}">Demande</a></li>
+                                        <li><a href="{{path("touteReservation")}}">Reservation</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {% if app.user.profil.libelle == "Propriétaire" %}
+                                <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">gestion demande<span class="pe-7s-angle-down"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{path("touteDemande")}}">Mes demandes</a></li>
+                                        <li><a href="{{path("touteDemande")}}">Douvelle demande</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="{{path("front_shows")}}" >Mes biens</a>
+                                </li>
+                                
+                            {% endif %}
+
+                            {% if app.user.profil.libelle == "Client" %}
+                                <li class="dropdown">
+                                    <a href="#" >Mes reservations</a>
+                                </li>
+                                
+                            {% endif %}
                         {% endif %}
                         
                         <li class="dropdown">
@@ -76,11 +99,23 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">admin <!-- si admin ou proprio ou client--> <span class="pe-7s-angle-down"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="footer-1.html">mon profil</a></li>
-                                <li><a href="footer-2.html">se deconnecter</a></li>
-                            </ul>
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
+                            {% if app.user %}
+        
+                                {{ app.user.email}}
+                            {% else %}
+                                    Username
+                            {% endif %}
+                            
+                            <!-- si admin ou proprio ou client--> <span class="pe-7s-angle-down"></span></a>
+                            
+                            {% if app.user %}
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="footer-1.html">mon profil</a></li>
+                                    <li><a href="{{path("app_logout")}}">se deconnecter</a></li>
+                                </ul>                                    
+                            {% endif %}
+                            
                         </li>
                     </ul>
                 </div>
