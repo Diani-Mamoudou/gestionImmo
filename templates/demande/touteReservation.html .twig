@@ -1,4 +1,4 @@
-{% extends 'basePrp.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}GE-IM catalogue!{% endblock %}
 
@@ -19,7 +19,7 @@
                                     </div>
                                     <h2 class="post-title">{{bien.typeUsage}}</h2>
                                     <p>{{bien.description|slice(0,100)}}</p>
-                                    <a class="btn btn-primary mt30" href="{{path("detail",{id:bien.id})}}">Read More</a>
+                                    <a class="btn btn-primary mt30" href="{{path("DetailReservation",{id:bien.id})}}">Read More</a>
                                 </div>
                             </div>
                         </div>

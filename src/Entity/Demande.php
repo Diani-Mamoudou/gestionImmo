@@ -42,6 +42,7 @@ class Demande
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="la zone est obligatoire")
      */
     private $zone;
 

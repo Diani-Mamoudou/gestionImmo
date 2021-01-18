@@ -39,23 +39,10 @@ class FrontController extends AbstractController
     }
 
 
-    /**
-     * @Route("/front/add/{id?}", name="front_add", methods={"POST","GET"})
-     */
-    public function save($id,BiensRepository $repo,EntityManagerInterface $manager, Request $request): Response{
-        $bien = empty($id)? new Biens():$repo->find($id) ;
-        $form=$this->createForm(BiensType::class, $bien);
+    
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($bien);
-            $manager->flush();
-            return $this->redirectToRoute("front_shows");
-        }
-        return $this->render('front/form.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
+
+
 
 
     /**
@@ -68,4 +55,5 @@ class FrontController extends AbstractController
         $manager->flush();
         return $this->redirectToRoute("front_shows");
     }
+    
 }

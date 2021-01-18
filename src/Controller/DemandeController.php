@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Biens;
 use App\Entity\Demande;
 use App\Form\DemandeType;
+use App\Repository\BiensRepository;
 use App\Repository\DemandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,18 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DemandeController extends AbstractController
 {
-    /**
-     * @Route("/demande/shows", name="demande_shows")
-     */
-    public function shows(DemandeRepository $repo): Response
-    {
-        $bien =$repo->findAll();
-        return $this->render('demande/index.html.twig', [
-            'biens' => $bien,
-        ]);
-    }
-
-
     /**
      * @Route("/demande/touteDemande", name="touteDemande")
      */
@@ -38,25 +28,147 @@ class DemandeController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/demande/touteReservation", name="touteReservation")
+     */
+    public function touteReservation(DemandeRepository $repo): Response
+    {
+        $bien =$repo->findBy([
+            "typeDema"=>'demReserv'
+        ]);
+        return $this->render('demande/touteReservation.html.twig', [
+            'biens' => $bien,
+        ]);
+    }
+
 
     /**
-     * @Route("/demande/gestBien", name="demande_gestBien", methods={"POST","GET"})
+     * @Route("/demande/showsDetail/{id?}", name="Detail_shows")
      */
-    public function save(DemandeRepository $repo,EntityManagerInterface $manager, Request $request): Response{
-        $demande = new Demande();
+    public function showsDetail($id,DemandeRepository $repo): Response
+    {
+        $bien =$repo->find($id);
+        return $this->render('demande/detailDemande.html.twig', [
+            'bien' => $bien,
+        ]);
+    }
+
+    /**
+     * @Route("/demande/showsDetailReserv/{id?}", name="DetailReserv_shows")
+     */
+    public function showsDetailReserv($id,DemandeRepository $repo): Response
+    {
+        $bien =$repo->find($id);
+        return $this->render('demande/detailReservation.html.twig', [
+            'bien' => $bien,
+        ]);
+    }
+
+    /**
+     * @Route("/front/add", name="demande", methods={"POST","GET"})
+     */
+    
+    public function demande(EntityManagerInterface $manager, Request $request): Response{
+        $demande= new Demande();
         $form=$this->createForm(DemandeType::class, $demande);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            
             $demande->setTypeDema("demGestion");
             $manager->persist($demande);
             $manager->flush();
-            return $this->redirectToRoute("demande_gestBien");
+            return $this->redirectToRoute("front_shows");
         }
-        
         return $this->render('demande/form.html.twig', [
             'form' => $form->createView()
         ]);
+        
     }
+
+    /**
+     * @Route("/demande/accDem/{id?}", name="accepte_demande")
+     */
+    public function demandeValid($id,DemandeRepository $repo,EntityManagerInterface $manager): Response
+    {
+        $demande =$repo->find($id);
+        if ($demande==null) {
+            dd("hjkl");
+        }
+        $bien = new Biens();
+        $bien->setDescription($demande->getDescription());
+        $bien->setPrix($demande->getPrix());
+        $bien->setZone($demande->getZone());
+        $bien->setTypeUsage($demande->getTypeUsage());
+        $bien->setType($demande->getType());
+        $bien->setPhoto($demande->getPhoto());
+        $bien->setPeriode($demande->getPeriode());
+        $manager->persist($bien);
+        $manager->remove($demande);
+        $manager->flush();
+        
+        return $this->redirectToRoute("touteDemande");
+
+    }
+
+
+    /**
+     * @Route("/demande/accepte_reservation/{id?}", name="accepte_reservation")
+     */
+    public function reservValid($id,DemandeRepository $repo,EntityManagerInterface $manager): Response
+    {
+        $demande =$repo->find($id);
+        if ($demande==null) {
+            dd("hjkl");
+        }
+        $bien = new Biens();
+        $bien->setDescription($demande->getDescription());
+        $bien->setPrix($demande->getPrix());
+        $bien->setZone($demande->getZone());
+        $bien->setTypeUsage($demande->getTypeUsage());
+        $bien->setType($demande->getType());
+        $bien->setPhoto($demande->getPhoto());
+        $bien->setPeriode($demande->getPeriode());
+        $bien->setEtat("louer");
+        $manager->persist($bien);
+        $manager->remove($demande);
+        $manager->flush();
+        
+        return $this->redirectToRoute("touteDemande");
+
+    }
+
+
+    /**
+     * @Route("/demande/refuDemande/{id?}", name="refuDemande")
+     */
+    public function refuDemande($id,DemandeRepository $repo,EntityManagerInterface $manager): Response
+    {
+        $bien =$repo->find($id);
+        $manager->remove($bien);
+        $manager->flush();
+        return $this->redirectToRoute("touteDemande");
+    }
+
+    /**
+     * @Route("/demande/refuse/{id?}", name="refureServ")
+     */
+    public function refureServ($id,DemandeRepository $repo,EntityManagerInterface $manager): Response
+    {
+        $demande =$repo->find($id);
+        if ($demande==null) {
+            dd("hjkl");
+        }
+        $bien = new Biens();
+        $bien->setDescription($demande->getDescription());
+        $bien->setPrix($demande->getPrix());
+        $bien->setZone($demande->getZone());
+        $bien->setTypeUsage($demande->getTypeUsage());
+        $bien->setType($demande->getType());
+        $bien->setPhoto($demande->getPhoto());
+        $bien->setPeriode($demande->getPeriode());
+        $manager->persist($bien);
+        $manager->remove($demande);
+        $manager->flush();
+        return $this->redirectToRoute("touteDemande");
+    }
+    
 }

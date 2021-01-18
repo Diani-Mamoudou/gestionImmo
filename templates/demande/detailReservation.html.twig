@@ -59,14 +59,9 @@
 									<div class="lead">
 										<p>{{bien.description}}</p>
                                     </div>
-                                    <!--
-										si c'est un admin on  a modifier et retirer
-										si c'est un proprio on a reserver
-										si c'est un client on a reserver
-									-->
-                                    <a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("front_add",{id:bien.id})}}">Modifier</a>
-                                    <!--<a class="btn btn-primary mt30" href="{{path("front_delate",{id:bien.id})}}">Retirer</a>-->
-									<a class="btn btn-primary mt30" href="{{path("demReserv",{id:bien.id})}}">Rreserver</a>
+                                    <a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("accepte_demande",{id:bien.id})}}">accepter</a>
+                                    <a class="btn btn-primary mt30" href="{{path("refureServ",{id:bien.id})}}">refuser</a>
+
 								</div>
 							</div>
 
