@@ -14,10 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class FrontController extends AbstractController
 {
     /**
-     * @Route("/front/shows", name="front_shows")
+     * @Route("/front/shows/{id?}", name="front_shows")
      */
-    public function show(BiensRepository $repo): Response
-    {
+    public function show($id,BiensRepository $repo): Response
+    {   
+        
         $bien =$repo->findBy([
             "etat"=>'libre'
         ]);
@@ -45,15 +46,6 @@ class FrontController extends AbstractController
 
 
 
-    /**
-     * @Route("/front/delete/{id}", name="front_delate", methods={"GET"})
-     */
-    public function delete($id,BiensRepository $repo,EntityManagerInterface $manager): Response{
-        
-        $bien=$repo->find($id);
-        $manager->remove($bien);
-        $manager->flush();
-        return $this->redirectToRoute("front_shows");
-    }
+    
     
 }

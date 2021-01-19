@@ -65,18 +65,18 @@ class DemandeController extends AbstractController
     }
 
     /**
-     * @Route("/front/add", name="demande", methods={"POST","GET"})
+     * @Route("/front/add/{id?}", name="demande", methods={"POST","GET"})
      */
     
-    public function demande(EntityManagerInterface $manager, Request $request): Response{
-        $demande= new Demande();
+    public function demande($id,EntityManagerInterface $manager,DemandeRepository $repo, Request $request): Response{
+        $demande= empty($id)? new Demande():$repo->find($id);
         $form=$this->createForm(DemandeType::class, $demande);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $demande->setTypeDema("demGestion");
             $manager->persist($demande);
             $manager->flush();
-            return $this->redirectToRoute("front_shows");
+            return $this->redirectToRoute("front_shows", array('id' => $id));
         }
         return $this->render('demande/form.html.twig', [
             'form' => $form->createView()
@@ -84,6 +84,33 @@ class DemandeController extends AbstractController
         
     }
 
+    /**
+     * @Route("/demande/reservation/{id?}", name="reservation")
+     */
+    public function reservation($id,BiensRepository $repo,EntityManagerInterface $manager): Response
+    {
+        $bien =$repo->find($id);
+        if ($bien==null) {
+            dd("hjkl");
+        }
+        $demande = new Demande();
+        $demande->setDescription($bien->getDescription());
+        $demande->setPrix($bien->getPrix());
+        $demande->setZone($bien->getZone());
+        $demande->setTypeUsage($bien->getTypeUsage());
+        $demande->setType($bien->getType());
+        $demande->setPhoto($bien->getPhoto());
+        $demande->setPeriode($bien->getPeriode());
+        $demande->setTypeDema("demReserv");
+        $manager->persist($demande);
+        $manager->remove($bien);
+        $manager->flush();
+        
+        return $this->redirectToRoute("touteDemande");
+
+    }
+
+    
 
     
 
@@ -171,7 +198,7 @@ class DemandeController extends AbstractController
         $manager->persist($bien);
         $manager->remove($demande);
         $manager->flush();
-        return $this->redirectToRoute("touteDemande");
+        return $this->redirectToRoute("touteReservation");
     }
     
 }

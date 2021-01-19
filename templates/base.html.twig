@@ -51,9 +51,19 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="main-navigation">
                     <ul class="nav navbar-nav navbar-right">
+                    {% if app.user == null %}
                         <li class="dropdown">
                             <a href="{{path("front_shows")}}" >Acceuil</a>
                         </li>
+                    {% else %}
+                        {% if app.user.profil.libelle == "Gestionnaire" %}
+                            <li class="dropdown">
+                                <a href="{{path("biens_shows")}}" >Acceuil</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                            
+                        
 
                         {% if app.user !=null %}
                             {% if app.user.profil.libelle == "Gestionnaire" %}
@@ -64,19 +74,23 @@
                                         <li><a href="{{path("touteReservation")}}">Reservation</a></li>
                                     </ul>
                                 </li>
-                            {% endif %}
 
-                            {% if app.user.profil.libelle == "Propriétaire" %}
                                 <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">gestion demande<span class="pe-7s-angle-down"></span></a>
+                                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Gestion d'utilisateur<span class="pe-7s-angle-down"></span></a>
                                         <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{path("touteDemande")}}">Mes demandes</a></li>
-                                        <li><a href="{{path("touteDemande")}}">Douvelle demande</a></li>
+                                        <li><a href="{{path("show_client", {profil:11})}}">Propriétaires</a></li>
+                                        <li><a href="{{path("touteReservation", {profil:12})}}">Clients</a></li>
                                     </ul>
                                 </li>
+                            {% endif %}
+
+                            {% if app.user.profil.libelle == "Proprietaire" %}
 
                                 <li class="dropdown">
                                     <a href="{{path("front_shows")}}" >Mes biens</a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="{{path("demande")}}" >Nouvelle demande</a>
                                 </li>
                                 
                             {% endif %}

@@ -64,9 +64,16 @@
 										si c'est un proprio on a reserver
 										si c'est un client on a reserver
 									-->
-                                    <a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("front_add",{id:bien.id})}}">Modifier</a>
-                                    <!--<a class="btn btn-primary mt30" href="{{path("front_delate",{id:bien.id})}}">Retirer</a>-->
-									<a class="btn btn-primary mt30" href="{{path("demReserv",{id:bien.id})}}">Rreserver</a>
+									{% if app.user.profil.libelle == "Gestionnaire" %}
+                                    	<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("modifier",{id:bien.id})}}">Modifier</a>
+										<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("bien_delate",{id:bien.id})}}">Retirer</a>
+									{% endif%}
+
+									{% if app.user.profil.libelle == "Client" %}
+                                    	<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("reservation",{id:bien.id})}}">Reserver</a>
+									{% endif%}
+                                    <!---->
+							
 								</div>
 							</div>
 
