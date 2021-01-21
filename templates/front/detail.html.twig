@@ -64,15 +64,22 @@
 										si c'est un proprio on a reserver
 										si c'est un client on a reserver
 									-->
-									{% if app.user.profil.libelle == "Gestionnaire" %}
-                                    	<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("modifier",{id:bien.id})}}">Modifier</a>
-										<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("bien_delate",{id:bien.id})}}">Retirer</a>
+									{% if app.user == null %}
+                                    	<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("app_login")}}">Reserver</a>
 									{% endif%}
 
-									{% if app.user.profil.libelle == "Client" %}
-                                    	<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("reservation",{id:bien.id})}}">Reserver</a>
+									{% if app.user != null %}
+										{% if app.user.profil.libelle == "Gestionnaire" %}
+											<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("modifier",{id:bien.id})}}">Modifier</a>
+											<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("bien_delate",{id:bien.id})}}">Retirer</a>
+										{% endif%}
+
+										{% if app.user.profil.libelle == "Client" %}
+											<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("reservation",{id:bien.id})}}">Reserver</a>
+										{% endif%}
 									{% endif%}
-                                    <!---->
+
+                                    
 							
 								</div>
 							</div>

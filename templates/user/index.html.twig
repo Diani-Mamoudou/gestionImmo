@@ -19,9 +19,10 @@
                             </div>
                         </div>
                         <h2 class="post-title">{{user.email}}</h2><!--adresse mail-->
-                        {% if user.profil == "gestionnaire" %}
-                            <a class="btn btn-primary mt30" style="margin-right: 50px;" href="#">Bien</a>
-                        {% else %}
+                        
+                        {% if (profil ==11)%}
+                            <a class="btn btn-primary mt30" style="margin-right: 50px;" href="#"> Bien </a>
+                        {% elseif (profil ==12) %}
                             <a class="btn btn-primary mt30" style="margin-right: 50px;" href="#">Reservation</a>
                         {% endif %}
                     </div>

@@ -14,9 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class FrontController extends AbstractController
 {
     /**
-     * @Route("/front/shows/{id?}", name="front_shows")
+     * @Route("/front/shows", name="front_shows")
      */
-    public function show($id,BiensRepository $repo): Response
+    public function show(BiensRepository $repo): Response
     {   
         
         $bien =$repo->findBy([

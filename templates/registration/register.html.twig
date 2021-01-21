@@ -1,0 +1,47 @@
+{% extends 'baseRegistration.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+	{% for flashError in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %}
+
+
+
+	<div class="col-6"></div>
+	<div class="tab-content" id="tabs-collapse">
+		<div role="tabpanel" class="tab-pane fade in active" id="contact1">
+			<div id="contact-inner" class="nopadding-lr">
+				<div class="contact-section-inner">
+	<div class="text-center"><h1>Register</h1></div>
+
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-8 col-sm-offset-2">
+								<div id="message"></div>
+								{{ form_start(registrationForm) }}
+								{{ form_row(registrationForm.email) }}
+								{{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+                                {{ form_row(registrationForm.profil) }}
+								{{ form_row(registrationForm.agreeTerms) }}
+
+								<button type="submit" class="btn">Register</button>
+								{{ form_end(registrationForm) }}
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div role="tabpanel" class="tab-pane fade" id="contact2">
+			<div id="mapwrapper"></div>
+		</div>
+
+	</div>
+{% endblock %}

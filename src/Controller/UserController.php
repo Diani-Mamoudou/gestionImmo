@@ -15,13 +15,12 @@ class UserController extends AbstractController
      */
     public function showClient($profil,UserRepository $repo): Response
     {
-        dd($profil);
         $user =$repo->findBy([
             "profil"=>$profil
         ]);
-        dd($user);
         return $this->render('user/index.html.twig', [
             'user' => $user,
+            'profil' => $profil,
         ]);
     }
 }

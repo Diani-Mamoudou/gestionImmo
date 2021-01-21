@@ -35,7 +35,7 @@ class BiensController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($demande);
             $manager->flush();
-            return $this->redirectToRoute("front_shows", array('id' => $id));
+            return $this->redirectToRoute("detail", array('id' => $id));
         }
         return $this->render('biens/form.html.twig', [
             'form' => $form->createView()
@@ -54,5 +54,16 @@ class BiensController extends AbstractController
         return $this->redirectToRoute("front_shows");
     }
     
-
+     /**
+     * @Route("/article/showBienByType/{type}", name="bien_by_type", methods={"POST","GET"})
+     */
+    public function showBienByType($type,BiensRepository $repo,EntityManagerInterface $manager): Response
+    {
+        $bien =$repo->findBy([
+            "type"=>$type
+        ]);
+        return $this->render('front/index.html.twig', [
+            'biens' => $bien ]);
+        
+    }
 }
