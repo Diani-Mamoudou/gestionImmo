@@ -14,6 +14,7 @@ class Demande
 {
     const TYPE = ["immeuble" => "immeuble", "chambre" => "chambre", "studio" => "studio", "appartement" => "appartement"];
     const TYPEU = ["bureau" => "bureau", "logement" => "logement"];
+    const TYPEDEM = ["demReserv" => "demReserv", "reserve" => "reserve"];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -72,6 +73,12 @@ class Demande
      * @ORM\Column(type="string", length=255)
      */
     private $typeDema;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Biens::class, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $bien;
 
     public function getId(): ?int
     {
@@ -185,4 +192,17 @@ class Demande
 
         return $this;
     }
+
+    public function getBien(): ?Biens
+    {
+        return $this->bien;
+    }
+
+    public function setBien(Biens $bien): self
+    {
+        $this->bien = $bien;
+
+        return $this;
+    }
+
 }

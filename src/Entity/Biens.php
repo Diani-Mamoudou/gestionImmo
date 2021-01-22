@@ -20,7 +20,7 @@ class Biens
 {
     const TYPE = ["immeuble" => "immeuble", "chambre" => "chambre", "studio" => "studio", "appartement" => "appartement"];
     const TYPEU = ["bureau" => "bureau", "logement" => "logement"];
-    const ETAT = ["Libre" => "libre", "louer" => "louer", "Refection" => "Refection", "Encours" => "Encours"];
+    const ETAT = ["Libre" => "libre", "louer" => "louer", "Refection" => "Refection", "Encours" => "Encours", "EncoursR" => "EncoursR"];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -77,7 +77,7 @@ class Biens
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Choice({"libre", "louer", "refection","Encours"})
+     * @Assert\Choice({"libre", "louer", "refection","Encours","EncoursR"})
      */
     private $etat = "Encours";
 
@@ -86,6 +86,8 @@ class Biens
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+   
 
     public function getId(): ?int
     {
@@ -212,4 +214,6 @@ class Biens
 
         return $this;
     }
+
+
 }

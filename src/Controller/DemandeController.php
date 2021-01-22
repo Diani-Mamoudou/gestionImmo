@@ -6,6 +6,7 @@ use App\Entity\Biens;
 use App\Entity\Demande;
 use App\Form\BiensType;
 use App\Form\DemandeType;
+use App\Repository\UserRepository;
 use App\Repository\BiensRepository;
 use App\Repository\DemandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -100,7 +101,7 @@ class DemandeController extends AbstractController
     /**
      * @Route("/demande/refuDemande/{id?}", name="refuDemande")
      */
-    public function refuDemande($id,DemandeRepository $repo,EntityManagerInterface $manager): Response
+    public function refuDemande($id,BiensRepository $repo,EntityManagerInterface $manager): Response
     {
         $bien =$repo->find($id);
         $manager->remove($bien);
@@ -150,8 +151,9 @@ class DemandeController extends AbstractController
         $demande->setPhoto($bien->getPhoto());
         $demande->setPeriode($bien->getPeriode());
         $demande->setTypeDema("demReserv");
+        $demande->setBien($bien);
+        $bien->setEtat("EncoursR");
         $manager->persist($demande);
-        $manager->remove($bien);
         $manager->flush();
         
         return $this->redirectToRoute("touteDemande");
@@ -161,23 +163,18 @@ class DemandeController extends AbstractController
     /**
      * @Route("/demande/accepte_reservation/{id?}", name="accepte_reservation")
      */
-    public function reservValid($id,DemandeRepository $repo,EntityManagerInterface $manager): Response
+    public function reservValid($id,DemandeRepository $repo,BiensRepository $repob,EntityManagerInterface $manager): Response
     {
         $demande =$repo->find($id);
-        if ($demande==null) {
+        $idB=$demande->getBien()->getId();
+        $bien= $repob->find($idB);
+        if ($demande==null && $bien== null) {
             dd("hjkl");
         }
-        $bien = new Biens();
-        $bien->setDescription($demande->getDescription());
-        $bien->setPrix($demande->getPrix());
-        $bien->setZone($demande->getZone());
-        $bien->setTypeUsage($demande->getTypeUsage());
-        $bien->setType($demande->getType());
-        $bien->setPhoto($demande->getPhoto());
-        $bien->setPeriode($demande->getPeriode());
-        $bien->setEtat("louer");
-        $manager->persist($bien);
-        $manager->remove($demande);
+        
+        $demande->setTypeDema("reserve");
+        $bien->setEtat("Louer");
+        $manager->persist($demande);
         $manager->flush();
         
         return $this->redirectToRoute("touteReservation");
@@ -187,21 +184,15 @@ class DemandeController extends AbstractController
     /**
      * @Route("/demande/refuse/{id?}", name="refureServ")
      */
-    public function refureServ($id,DemandeRepository $repo,EntityManagerInterface $manager): Response
+    public function refureServ($id,DemandeRepository $repo,BiensRepository $repob,EntityManagerInterface $manager): Response
     {
         $demande =$repo->find($id);
-        if ($demande==null) {
+        $idB=$demande->getBien()->getId();
+        $bien= $repob->find($idB);
+        if ($demande==null && $bien== null) {
             dd("hjkl");
         }
-        $bien = new Biens();
-        $bien->setDescription($demande->getDescription());
-        $bien->setPrix($demande->getPrix());
-        $bien->setZone($demande->getZone());
-        $bien->setTypeUsage($demande->getTypeUsage());
-        $bien->setType($demande->getType());
-        $bien->setPhoto($demande->getPhoto());
-        $bien->setPeriode($demande->getPeriode());
-        $manager->persist($bien);
+        $bien->setEtat("libre");
         $manager->remove($demande);
         $manager->flush();
         return $this->redirectToRoute("touteReservation");
