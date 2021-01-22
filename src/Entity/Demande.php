@@ -80,6 +80,12 @@ class Demande
      */
     private $bien;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userReserv;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -205,4 +211,23 @@ class Demande
         return $this;
     }
 
+    /**
+     * Get the value of userReserv
+     */ 
+    public function getUserReserv()
+    {
+        return $this->userReserv;
+    }
+
+    /**
+     * Set the value of userReserv
+     *
+     * @return  self
+     */ 
+    public function setUserReserv($userReserv)
+    {
+        $this->userReserv = $userReserv;
+
+        return $this;
+    }
 }

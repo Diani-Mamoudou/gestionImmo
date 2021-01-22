@@ -92,10 +92,10 @@
 										</a>
 										<ul class="dropdown-menu" role="menu">
 											<li>
-												<a href="{{path("show_client", {profil:11})}}">Propriétaires</a>
+												<a href="{{path("user_by_profil", {profil:"proprietaire"})}}">Propriétaires</a>
 											</li>
 											<li>
-												<a href="{{path("show_client", {profil:12})}}">Clients</a>
+												<a href="{{path("user_by_profil", {profil:"client"})}}">Clients</a>
 											</li>
 										</ul>
 									</li>
@@ -104,7 +104,7 @@
 								{% if app.user.profil.libelle == "Proprietaire" %}
 
 									<li class="dropdown">
-										<a href="{{path("front_shows")}}">Mes biens</a>
+										<a href="{{path("biens_shows_user",{id:app.user.id})}}">Mes biens</a>
 									</li>
 									<li class="dropdown">
 										<a href="{{path("newDemande", {id:app.user.id})}}">Nouvelle demande</a>
@@ -114,7 +114,7 @@
 
 								{% if app.user.profil.libelle == "Client" %}
 									<li class="dropdown">
-										<a href="#">Mes reservations</a>
+										<a href="{{path("demande_shows_user",{id:app.user.id})}}">Mes reservations</a>
 									</li>
 
 								{% endif %}

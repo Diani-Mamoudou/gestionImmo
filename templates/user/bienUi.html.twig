@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GE-IM catalogue!
+{% endblock %}
+
+{% block body %}
+	<section>
+		<div class="section-inner">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-8">
+					<h3 class="text-center">Mes biens</h3>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					
+						{% for bien in bien %}
+							<div class="col-sm-4 blog-item mb100 wow match-height">
+								
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="hover-item mb30">
+											<span class="onsale">{{bien.type}}!</span>
+											<img src="https://source.unsplash.com/860x580/?immeuble" class="img-responsive smoothie" alt="title">
+											<div class="overlay-item-caption smoothie"></div>
+											<div class="hover-item-caption smoothie">
+												<h3 class="vertical-center smoothie">
+													<a href="single-post-right-sidebar.html" class="smoothie btn btn-primary page-scroll" title="view article">View</a>
+												</h3>
+											</div>
+										</div>
+										<h5 class="amount">{{bien.prix}}
+											$</h5>
+										<div class="lead">
+											<h5>{{bien.typeUsage}}</h5>
+										</div>
+										<div class="lead">
+											<h5>Situé à
+												{{bien.zone}}</h5>
+										</div>
+
+										<div class="lead">
+											<h6>{{bien.description}}</h6>
+										</div>
+									</div>
+									<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("bien_delate",{id:bien.id})}}">supprimer</a>
+								</div>
+							</div>
+						{% else %}
+							Pas de bien
+						{% endfor %}
+					</div>
+
+					<div id="post-sidebar" class="col-sm-3 col-sm-offset-1">
+
+						<div class="row section-inner nopaddingbottom">
+							<div class="container">
+								<div class="row mb100">
+									<div class="col-sm-4 wow fadeIn" data-wow-delay="0.2s">
+										<div class="icon-box-1 match-height mb30">
+											<i class="fa-4x pe-7s-camera"></i>
+											<div class="content-area">
+												<h3 class="title">{{user.email}}</h3>
+												<div class="content">{{user.telephone}}</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

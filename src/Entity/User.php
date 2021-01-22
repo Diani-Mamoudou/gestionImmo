@@ -47,9 +47,20 @@ class User implements UserInterface
      */
     private $bien;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Demande::class, mappedBy="user")
+     */
+    private $reservation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $telephone;
+
     public function __construct()
     {
         $this->bien = new ArrayCollection();
+        $this->reservation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,6 +182,48 @@ class User implements UserInterface
                 $bien->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Demande[]
+     */
+    public function getReservation(): Collection
+    {
+        return $this->reservation;
+    }
+
+    public function addReservation(Demande $reservation): self
+    {
+        if (!$this->reservation->contains($reservation)) {
+            $this->reservation[] = $reservation;
+            $reservation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Demande $reservation): self
+    {
+        if ($this->reservation->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }

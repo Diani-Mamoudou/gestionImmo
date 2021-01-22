@@ -7,28 +7,34 @@
 	<div class="row container col-sm-8" style="margin:50px">
 		<div class="col-sm-6 blog-item mb100 wow match-height">
 			<div class="row">
-                {% for user in user %}
-                    <div class="col-xs-6">
-                        <div class="hover-item mb30">
-                            <img src="https://source.unsplash.com/360x350/?personne" class="img-responsive smoothie" alt="title">
-                            <div class="overlay-item-caption smoothie"></div>
-                            <div class="hover-item-caption smoothie">
-                                <h3 class="vertical-center smoothie">
-                                    <a href="#" class="smoothie btn btn-primary page-scroll" title="view article">View</a>
-                                </h3>
-                            </div>
-                        </div>
-                        <h2 class="post-title">{{user.email}}</h2><!--adresse mail-->
-                        
-                        {% if (profil ==11)%}
-                            <a class="btn btn-primary mt30" style="margin-right: 50px;" href="#"> Bien </a>
-                        {% elseif (profil ==12) %}
-                            <a class="btn btn-primary mt30" style="margin-right: 50px;" href="#">Reservation</a>
-                        {% endif %}
-                    </div>
-                {% else %}
-                    Pas de d'utilisateur.
-                {% endfor %}
+				
+				<section id="welcome">
+					{% for user in user %}
+						<div class="row section-inner nopaddingbottom">
+							<div class="container">
+								<div class="row mb100">
+									<div class="col-sm-4 wow fadeIn" data-wow-delay="0.2s">
+										<div class="icon-box-1 match-height mb30">
+											<i class="fa-4x pe-7s-camera"></i>
+											<div class="content-area">
+												<h3 class="title">{{user.email}}</h3>
+												<div class="content">{{user.telephone}}</div>
+											</div>
+
+											{% if user.profil.libelle == "Proprietaire" %}
+												<a class="btn btn-primary mt30" href="{{path("biens_shows_user",{id:user.id})}}">Bien</a>
+											{% else %}
+												<a class="btn btn-primary mt30" href="{{path("demande_shows_user",{id:user.id})}}">Reservation</a>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% else %}
+						Pas de d'utilisateur.
+					{% endfor %}
+        		</section>
 			</div>
 		</div>
 	</div>

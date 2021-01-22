@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Biens;
 use App\Form\BiensType;
+use App\Repository\UserRepository;
 use App\Repository\BiensRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,7 @@ class BiensController extends AbstractController
     }
 
     /**
-     * @Route("/front/modifier/{id?}", name="modifier", methods={"POST","GET"})
+     * @Route("/biens/modifier/{id?}", name="modifier", methods={"POST","GET"})
      */
     
     public function modif($id,EntityManagerInterface $manager,BiensRepository $repo, Request $request): Response{
@@ -44,7 +45,7 @@ class BiensController extends AbstractController
     }
 
     /**
-     * @Route("/front/delate/{id}", name="bien_delate", methods={"GET"})
+     * @Route("/biens/delate/{id}", name="bien_delate", methods={"GET"})
      */
     public function delete($id,BiensRepository $repo,EntityManagerInterface $manager): Response{
         
@@ -55,7 +56,7 @@ class BiensController extends AbstractController
     }
     
      /**
-     * @Route("/article/showBienByType/{type}", name="bien_by_type", methods={"POST","GET"})
+     * @Route("/biens/showBienByType/{type}", name="bien_by_type", methods={"POST","GET"})
      */
     public function showBienByType($type,BiensRepository $repo,EntityManagerInterface $manager): Response
     {
@@ -66,4 +67,22 @@ class BiensController extends AbstractController
             'biens' => $bien ]);
         
     }
+
+    /**
+     * @Route("/biens/bienShowsByUser/{id}", name="biens_shows_user")
+     */
+    public function bienShowsByUser($id,BiensRepository $repo,UserRepository $repoU): Response
+    {
+        $user=$repoU->find($id);
+        $bien =$repo->findBy([
+            "user"=>$user
+        ]);
+        return $this->render('user/bienUi.html.twig', [
+            'bien' => $bien,
+            'user' => $user,
+        ]);
+    }
+    
+
+    
 }

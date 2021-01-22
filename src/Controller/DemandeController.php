@@ -134,11 +134,12 @@ class DemandeController extends AbstractController
     }
 
     /**
-     * @Route("/demande/reservation/{id?}", name="reservation")
+     * @Route("/demande/reservation/{id?}/{idU?}", name="reservation")
      */
-    public function reservation($id,BiensRepository $repo,EntityManagerInterface $manager): Response
+    public function reservation($id,$idU,BiensRepository $repo,UserRepository $repoU,EntityManagerInterface $manager): Response
     {
         $bien =$repo->find($id);
+        $user= $repoU->find($idU);
         if ($bien==null) {
             dd("hjkl");
         }
@@ -152,6 +153,7 @@ class DemandeController extends AbstractController
         $demande->setPeriode($bien->getPeriode());
         $demande->setTypeDema("demReserv");
         $demande->setBien($bien);
+        $demande->setUser($user);
         $bien->setEtat("EncoursR");
         $manager->persist($demande);
         $manager->flush();
@@ -196,6 +198,32 @@ class DemandeController extends AbstractController
         $manager->remove($demande);
         $manager->flush();
         return $this->redirectToRoute("touteReservation");
+    }
+
+    /**
+     * @Route("/demande/demandeShowsByUser/{id}", name="demande_shows_user")
+     */
+    public function demandeShowsByUser($id,DemandeRepository $repo,UserRepository $repoU): Response
+    {
+        $user=$repoU->find($id);
+        $bien =$repo->findBy([
+            "userReserv"=>$user
+        ]);        
+        return $this->render('user/demandeUi.html.twig', [
+            'bien' => $bien,
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/demande/delate/{id}", name="demande_delate", methods={"GET"})
+     */
+    public function delete($id,DemandeRepository $repo,EntityManagerInterface $manager): Response{
+        
+        $bien=$repo->find($id);
+        $manager->remove($bien);
+        $manager->flush();
+        return $this->redirectToRoute("front_shows");
     }
     
 }
