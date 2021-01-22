@@ -20,7 +20,7 @@ class Biens
 {
     const TYPE = ["immeuble" => "immeuble", "chambre" => "chambre", "studio" => "studio", "appartement" => "appartement"];
     const TYPEU = ["bureau" => "bureau", "logement" => "logement"];
-    const ETAT = ["Libre" => "libre", "louer" => "louer", "Refection" => "Refection"];
+    const ETAT = ["Libre" => "libre", "louer" => "louer", "Refection" => "Refection", "Encours" => "Encours"];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -77,9 +77,15 @@ class Biens
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Choice({"libre", "louer", "refection"})
+     * @Assert\Choice({"libre", "louer", "refection","Encours"})
      */
-    private $etat = "libre";
+    private $etat = "Encours";
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bien")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -191,6 +197,18 @@ class Biens
     public function setEtat(string $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

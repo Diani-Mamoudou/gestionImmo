@@ -56,17 +56,14 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="main-navigation">
 						<ul class="nav navbar-nav navbar-right">
-							{% if app.user == null %}
+							
 								<li class="dropdown">
 									<a href="{{path("front_shows")}}">Acceuil</a>
 								</li>
-							{% else %}
-								{% if app.user.profil.libelle == "Gestionnaire" %}
+							
 									<li class="dropdown">
 										<a href="{{path("biens_shows")}}">Acceuil</a>
 									</li>
-								{% endif %}
-							{% endif %}
 
 
 							{% if app.user !=null %}
@@ -104,7 +101,7 @@
 										<a href="{{path("front_shows")}}">Mes biens</a>
 									</li>
 									<li class="dropdown">
-										<a href="{{path("demande")}}">Nouvelle demande</a>
+										<a href="{{path("newDemande", {id:app.user.id})}}">Nouvelle demande</a>
 									</li>
 
 								{% endif %}
