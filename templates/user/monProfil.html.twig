@@ -18,14 +18,9 @@
 											<i class="fa-4x pe-7s-user"></i>
 											<div class="content-area">
 												<h3 class="title">Email: {{user.email}}</h3>
-												<div class="content">Numéro de téléphone{{user.telephone}}</div>
+												<div class="content">Numéro de telephone: {{user.telephone}}</div>
 											</div>
-
-											{% if user.profil.libelle == "Proprietaire" %}
-												<a class="btn btn-primary mt30" href="{{path("biens_shows_user",{id:user.id})}}">Bien</a>
-											{% else %}
-												<a class="btn btn-primary mt30" href="{{path("demande_shows_user",{id:user.id})}}">Reservation</a>
-											{% endif %}
+											<a class="btn btn-primary mt30" href="{{path("modifier_user",{id:user.id})}}">Modifier</a>
 										</div>
 									</div>
 								</div>

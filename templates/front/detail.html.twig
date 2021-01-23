@@ -38,23 +38,37 @@
 
 							<div class="col-xs-12 col-sm-6 mb50">
 								<div class="summary entry-summary">
-
+									{% if bien.prix %}
+							
 									<div>
 										<p class="price">
-											<del>
-												<span class="amount">{{bien.prix}} $</span>
-											</del>
 											<ins>
-												<span class="amount">{{bien.prix}} $</span>
+												<span class="amount">Prix {{bien.prix}} $</span>
 											</ins>
 										</p>
                                     </div>
+									{% endif %}
+									{% if bien.loyer %}
+										<div class="lead">
+											<p>Loyer {{bien.loyer}}</p>
+										</div>
+									{% endif %}
+
+									{% if bien.periode %}
+										<div class="lead">
+											<p>période {{bien.periode}}</p>
+										</div>
+									{% endif %}
+
+
                                     <div class="lead">
 										<p>{{bien.typeUsage}}</p>
 									</div>
                                     <div class="lead">
 										<p>Situé à {{bien.zone}}</p>
 									</div>
+									
+									
 
 									<div class="lead">
 										<p>{{bien.description}}</p>
