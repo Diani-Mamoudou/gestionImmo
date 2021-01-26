@@ -63,8 +63,6 @@ class Biens
      */
     private $loyer;
 
- 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */

@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Profil;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,7 +22,16 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('profil')
+            ->add('profil', EntityType::class, [
+                'class' => Profil::class,
+                'query_builder' => function (EntityRepository $er){
+                    return $er->createQueryBuilder('u')
+                    ->where('u.libelle NOT IN (:names)')
+                    ->setParameter('names',['Gestionnaire'])
+                    ->orderBy('u.libelle', 'ASC');
+                },
+                'choice_label' => 'libelle'
+            ])
             ->add('telephone')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -38,7 +50,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Please enter a password',
                     ]),
                     new Length([
-                        'min' => 6,
+                        'min' => 4,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,

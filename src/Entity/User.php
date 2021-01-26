@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity("email", message="email existe deja")
  */
 class User implements UserInterface
 {
@@ -34,7 +34,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="le mot de passe est obligatoire")
      */
     private $password;
 
@@ -204,7 +203,7 @@ class User implements UserInterface
     {
         if (!$this->reservation->contains($reservation)) {
             $this->reservation[] = $reservation;
-            $reservation->setUser($this);
+            $reservation->setUserReserv($this);
         }
 
         return $this;
@@ -214,8 +213,8 @@ class User implements UserInterface
     {
         if ($this->reservation->removeElement($reservation)) {
             // set the owning side to null (unless already changed)
-            if ($reservation->getUser() === $this) {
-                $reservation->setUser(null);
+            if ($reservation->getUserReserv() === $this) {
+                $reservation->setUserReserv(null);
             }
         }
 

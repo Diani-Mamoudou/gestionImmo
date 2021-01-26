@@ -64,23 +64,6 @@ class UserController extends AbstractController
     }
 
     
-    /**
-     * @Route("/user/modifierUser/{id?}", name="modifier_user", methods={"POST","GET"})
-     */
     
-    public function modifierUser($id,EntityManagerInterface $manager,UserRepository $repo, Request $request): Response{
-        $user =$repo->find($id);
-        $form=$this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($user);
-            $manager->flush();
-            return $this->redirectToRoute("mon_profil", array('id' => $id));
-        }
-        return $this->render('user/form.html.twig', [
-            'form' => $form->createView()
-        ]);
-        
-    }
 
 }
