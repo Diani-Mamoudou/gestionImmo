@@ -15,22 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user/show_client/{profil?}", name="show_client")
-     */
-    public function showClient($profil,UserRepository $repo): Response
-    {
-        $user =$repo->findBy([
-            "profil"=>$profil
-        ]);
-        dd($user);
-
-        return $this->render('user/index.html.twig', [
-            'user' => $user,
-            'profil' => $profil,
-        ]);
-    }
-
-    /**
      * @Route("/user/showUserByProfil/{profil}", name="user_by_profil", methods={"POST","GET"})
      */
     public function showUserByProfil($profil,ProfilRepository $repo,UserRepository $repoU): Response

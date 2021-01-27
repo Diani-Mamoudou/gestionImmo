@@ -73,7 +73,7 @@ class DemandeController extends AbstractController
             $demande->setUser($user);
             $manager->persist($demande);
             $manager->flush();
-            return $this->redirectToRoute("front_shows", array('id' => $id));
+            return $this->redirectToRoute("front_shows");
         }
         return $this->render('demande/form.html.twig', [
             'form' => $form->createView()
@@ -157,6 +157,7 @@ class DemandeController extends AbstractController
         $demande->setTypeUsage($bien->getTypeUsage());
         $demande->setType($bien->getType());
         $demande->setPhoto($bien->getPhoto());
+        $demande->setLoyer($bien->getLoyer());
         $demande->setPeriode($bien->getPeriode());
         $demande->setTypeDema("demReserv");
         $demande->setBien($bien);
@@ -165,7 +166,7 @@ class DemandeController extends AbstractController
         $manager->persist($demande);
         $manager->flush();
         
-        return $this->redirectToRoute("touteDemande");
+        return $this->redirectToRoute("front_shows");
 
     }
 

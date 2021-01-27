@@ -85,7 +85,6 @@
 									{% if app.user != null %}
 										{% if app.user.profil.libelle == "Gestionnaire" %}
 											<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("modifier",{id:bien.id})}}">Modifier</a>
-											<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("bien_delate",{id:bien.id})}}">supprimer</a>
 											<a class="btn btn-primary mt30" style="margin-right: 50px;" href="{{path("bien_delate",{id:bien.id})}}">Retirer</a>
 										{% endif%}
 
