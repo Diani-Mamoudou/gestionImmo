@@ -90,6 +90,13 @@ class DemandeController extends AbstractController
         if ($bien==null) {
             dd("hjkl");
         }
+        if ($bien->getLoyer() != null) {
+            $loyer=$bien->getLoyer()+($bien->getLoyer()*0.05);
+            $bien->setLoyer($loyer);
+        }elseif ($bien->getPrix() != null) {
+            $loyer=$bien->getPrix()+($bien->getPrix()*0.05);
+            $bien->setPrix($loyer);
+        }
         $bien->setEtat("libre");
         $manager->persist($bien);
         $manager->flush();
@@ -153,7 +160,7 @@ class DemandeController extends AbstractController
         $demande->setPeriode($bien->getPeriode());
         $demande->setTypeDema("demReserv");
         $demande->setBien($bien);
-        $demande->setUser($user);
+        $demande->setUserReserv($user);
         $bien->setEtat("EncoursR");
         $manager->persist($demande);
         $manager->flush();
