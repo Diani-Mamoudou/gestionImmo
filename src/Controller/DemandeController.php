@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\BienImage;
 use App\Entity\Biens;
 use App\Entity\Demande;
 use App\Form\BiensType;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class DemandeController extends AbstractController
 {
@@ -71,6 +73,22 @@ class DemandeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $demande->setUser($user);
+
+            /** @var UploadedFile $images */
+            $images=$form->get('bienImage')->getData();
+            if ($images){
+                foreach ($images as $image) {
+                    $fichier= md5(uniqid()).'.'.$image->getClientOriginalExtension();
+                    try {
+                        $image->move($this->getParameter('images_directory'), $fichier);
+                    } catch (FileException $di) {
+                        dump($di);
+                    }
+                    $img= new BienImage();
+                    $img->setLibelle($fichier);
+                    $demande->addBienImage($img);
+                }
+            }
             $manager->persist($demande);
             $manager->flush();
             return $this->redirectToRoute("front_shows");

@@ -85,6 +85,17 @@ class Biens
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=BienImage::class, mappedBy="biens"
+     * , cascade={"persist"})
+     */
+    private $bienImage;
+
+    public function __construct()
+    {
+        $this->bienImage = new ArrayCollection();
+    }
+
    
 
     public function getId(): ?int
@@ -209,6 +220,36 @@ class Biens
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BienImage[]
+     */
+    public function getBienImage(): Collection
+    {
+        return $this->bienImage;
+    }
+
+    public function addBienImage(BienImage $bienImage): self
+    {
+        if (!$this->bienImage->contains($bienImage)) {
+            $this->bienImage[] = $bienImage;
+            $bienImage->setBiens($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBienImage(BienImage $bienImage): self
+    {
+        if ($this->bienImage->removeElement($bienImage)) {
+            // set the owning side to null (unless already changed)
+            if ($bienImage->getBiens() === $this) {
+                $bienImage->setBiens(null);
+            }
+        }
 
         return $this;
     }

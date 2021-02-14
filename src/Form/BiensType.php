@@ -6,6 +6,7 @@ use App\Entity\Biens;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -26,6 +27,12 @@ class BiensType extends AbstractType
             ->add('loyer')
             ->add('periode')
             ->add('photo')
+            ->add('bienImage', FileType::class, [
+                'label'=> false,
+                'multiple' => true,
+                'required' => false,
+                'mapped' => false
+            ])
             ->add('Enregistrer', SubmitType::class, [
                 "attr"=>[
                     "class"=>"btn-primary ml-2 float-right"
